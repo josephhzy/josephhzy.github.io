@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CreditGuard — Credit Default Early Warning &amp; Decisioning — Joseph Zhi Yu</title>
+  <meta name="description" content="End-to-end credit risk ML system with 87+ engineered features, SHAP explainability, fairness diagnostics, and champion-challenger governance. FastAPI serving with MLflow tracking.">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="favicon_io/site.webmanifest">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <button id="sidebar-toggle" aria-label="Toggle navigation">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div id="sidebar-overlay"></div>
+
+  <aside id="sidebar">
+    <div class="profile">
+      <img src="assets/img/joseph-profile.png" class="sidebar-photo" alt="Joseph Zhi Yu">
+      <div class="sidebar-name"><a href="index.html">Joseph Zhi Yu</a></div>
+      <div class="social-links">
+        <a href="https://github.com/josephhzy" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html#hero"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="index.html#about"><i class="fa-solid fa-user"></i> About</a></li>
+        <li><a href="index.html#portfolio" class="active"><i class="fa-solid fa-briefcase"></i> Portfolio</a></li>
+        <li><a href="index.html#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div id="main">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+      <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h2>CreditGuard -- Credit Default Early Warning &amp; Decisioning</h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="index.html#portfolio">Portfolio</a></li>
+            <li class="breadcrumb-item active">CreditGuard</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Detail Content -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="row g-5">
+
+          <!-- Left: main content -->
+          <div class="col-lg-8" data-aos="fade-up">
+            <img src="assets/img/portfolio/creditguard-preview.png" class="project-main-img" alt="CreditGuard - Credit Default Early Warning & Decisioning">
+
+            <!-- CTA -->
+            <div class="demo-cta-bar mb-4">
+              <a href="https://github.com/josephhzy/creditguard" target="_blank" class="btn-accent me-3">
+                <i class="fa-brands fa-github me-1"></i> GitHub
+              </a>
+            </div>
+
+            <!-- My Contribution -->
+            <div class="safeguard-card mb-4">
+              <div class="safeguard-num">What I Built</div>
+              <div class="tag-list mt-2">
+                <span class="tag">Feature engineering pipeline</span>
+                <span class="tag">5 experiment tracks</span>
+                <span class="tag">SHAP explainability</span>
+                <span class="tag">Fairness diagnostics</span>
+                <span class="tag">FastAPI serving</span>
+                <span class="tag">Champion-challenger governance</span>
+                <span class="tag">Interactive Streamlit dashboard</span>
+                <span class="tag">Test suite</span>
+                <span class="tag">Docker + CI</span>
+              </div>
+            </div>
+
+            <!-- Dashboard callout -->
+            <div class="safeguard-card mb-4">
+              <div class="safeguard-num">Explore the Model</div>
+              <p class="mb-2">
+                The repo ships with an interactive Streamlit dashboard that reads the shipped OOF artifacts — no retraining needed.
+              </p>
+              <ul class="mb-2">
+                <li><strong>Ranking:</strong> live ROC + PR + lift curves, computed on all 307,511 OOF predictions</li>
+                <li><strong>Calibration:</strong> raw/Platt/isotonic Brier comparison and a live reliability diagram</li>
+                <li><strong>Threshold simulator:</strong> drag the approve/decline gates and watch realised default rate, confusion matrix, and expected cost update live</li>
+                <li><strong>Fairness:</strong> AIR sweep for gender and education with the 80% rule overlaid</li>
+                <li><strong>SHAP:</strong> global feature importance with external-bureau share highlighted</li>
+              </ul>
+              <p class="mb-0"><code>pip install -r requirements-streamlit.txt &amp;&amp; streamlit run streamlit_app.py</code></p>
+            </div>
+
+            <div class="project-description">
+
+              <h2>The Problem</h2>
+              <p>
+                Banks make thousands of lending decisions daily. A wrong approval costs the loan amount
+                (often $50K+); a wrong decline costs lost revenue and customer trust. In regulated lending,
+                the model also needs to be explainable to auditors, fair across demographics, and promoted
+                through a governed process. I wanted to work through all of that, not just the modelling.
+              </p>
+
+              <h2>Why This Was Hard</h2>
+              <ul>
+                <li><strong>Default is rare.</strong> Only 8% of rows are positive — accuracy is meaningless, and naive models learn to predict "no default" for everything</li>
+                <li><strong>Credit decisions need explanation.</strong> A score alone is not enough — regulators and customers can ask why they were declined</li>
+                <li><strong>A better metric is not enough to deploy.</strong> Model promotion needs governance because performance on a test set does not guarantee fairness or calibration in production</li>
+              </ul>
+
+              <div class="row g-3 my-3">
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">8%</div>
+                    <p>Default prevalence — accuracy alone is misleading, so PR-AUC and threshold tuning drive decisions</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">Top-k</div>
+                    <p>Thresholds tuned for precision-recall tradeoffs against review capacity, not the 0.5 default cutoff</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">4 gates</div>
+                    <p>Performance, calibration, fairness, and interpretability — all required before a model is promoted</p>
+                  </div>
+                </div>
+              </div>
+
+              <h2>The Approach</h2>
+              <p>
+                Built on a 7-table banking dataset with 307K rows and an 8% default rate.
+                Most of the work ended up being threshold tuning under class imbalance,
+                SHAP explanations, subgroup fairness checks, and setting up the promotion gates.
+              </p>
+
+              <h2>How It Works</h2>
+
+              <!-- Architecture diagram -->
+              <div class="arch-diagram my-4">
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-database"></i></div>
+                  <div class="arch-label">7-Table Ingestion</div>
+                  <div class="arch-sub">Relational banking data -- joins and cleaning</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-gears"></i></div>
+                  <div class="arch-label">Feature Engineering</div>
+                  <div class="arch-sub">87+ features -- ratios, aggregations, temporal</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                  <div class="arch-label">Imbalance Handling</div>
+                  <div class="arch-sub">SMOTE -- threshold tuning -- stratified CV</div>
+                </div>
+              </div>
+
+              <div class="arch-diagram my-3">
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-brain"></i></div>
+                  <div class="arch-label">Model Training</div>
+                  <div class="arch-sub">LightGBM -- XGBoost -- scikit-learn</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage arch-stage--safeguard">
+                  <div class="arch-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                  <div class="arch-label">Explainability</div>
+                  <div class="arch-sub">SHAP values -- fairness diagnostics</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage arch-stage--safeguard">
+                  <div class="arch-icon"><i class="fa-solid fa-trophy"></i></div>
+                  <div class="arch-label">Champion-Challenger</div>
+                  <div class="arch-sub">MLflow tracking -- governed promotion</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-server"></i></div>
+                  <div class="arch-label">FastAPI Serving</div>
+                  <div class="arch-sub">Docker -- REST API -- batch + real-time</div>
+                </div>
+              </div>
+
+              <h2>Data Engineering</h2>
+              <p>
+                The raw dataset spans 7 relational tables representing different aspects of banking customer
+                records: account information, transaction history, credit bureau data, payment patterns, and
+                demographic attributes. The engineering pipeline joins these tables, handles missing values
+                with domain-appropriate strategies (not just mean imputation), and constructs 87+ features
+                including:
+              </p>
+              <ul>
+                <li><strong>Financial ratios</strong> -- debt-to-income, credit utilisation, payment-to-balance ratios</li>
+                <li><strong>Temporal aggregations</strong> -- rolling averages, trend indicators, payment velocity</li>
+                <li><strong>Behavioural signals</strong> -- payment regularity, balance volatility, credit line usage patterns</li>
+                <li><strong>Bureau-derived features</strong> -- inquiry counts, delinquency history, account age metrics</li>
+              </ul>
+
+              <h2>Imbalanced Classification</h2>
+              <p>
+                Credit default is a rare event -- the dataset exhibits severe class imbalance typical of
+                real banking portfolios. The system addresses this through multiple complementary strategies:
+              </p>
+              <ul>
+                <li><strong>SMOTE oversampling</strong> applied within cross-validation folds to prevent data leakage</li>
+                <li><strong>Threshold tuning</strong> based on precision-recall tradeoffs rather than defaulting to 0.5</li>
+                <li><strong>Stratified cross-validation</strong> ensuring each fold preserves the class distribution</li>
+                <li><strong>Class-weighted loss functions</strong> in gradient boosting models</li>
+              </ul>
+
+              <h2>Explainability and Fairness</h2>
+              <p>
+                Regulated credit decisioning requires more than a prediction score. CreditGuard provides:
+              </p>
+              <div class="row g-3 my-2">
+                <div class="col-md-6">
+                  <div class="safeguard-card">
+                    <div class="safeguard-num">Explainability</div>
+                    <h5>SHAP-based interpretability</h5>
+                    <p>
+                      Every prediction comes with SHAP values explaining which features drove the decision
+                      and by how much. Global feature importance, local per-prediction explanations, and
+                      interaction effects are all computed and available via the API. This supports regulatory
+                      requirements for adverse action explanations in credit decisions.
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="safeguard-card">
+                    <div class="safeguard-num">Fairness</div>
+                    <h5>Fairness diagnostics</h5>
+                    <p>
+                      Fairness checks run before model promotion to ensure error rates and calibration
+                      do not degrade across subgroups. Metrics include adverse impact ratio, equalised odds,
+                      and calibration by subgroup. A material disparity on any dimension blocks promotion —
+                      fairness is a gate, not a report.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h2>Champion-Challenger Governance</h2>
+              <p>
+                Model promotion from development to production follows a governed champion-challenger process
+                tracked through MLflow. A new model (challenger) must demonstrate statistically significant
+                improvement over the current production model (champion) on held-out data before it can be
+                promoted. All experiments, hyperparameters, metrics, and artifacts are versioned and logged,
+                providing a complete audit trail for model governance reviews.
+              </p>
+
+              <h2>What I Learned</h2>
+              <p>
+                A few things I ran into while building this:
+              </p>
+              <ul>
+                <li>
+                  <strong>Never swallow exceptions silently.</strong> My initial SHAP computation had a bare
+                  <code>except Exception</code> that silently fell back to feature importances. A real bug in
+                  the SHAP integration was hidden for weeks. I learned to catch specific exception types and
+                  always log the reason for a fallback.
+                </li>
+                <li>
+                  <strong>Hyperparameter search is easy to corrupt.</strong> When an Optuna trial fails, returning
+                  <code>0.0</code> (a valid but terrible score) misleads the Bayesian optimizer. The fix was to
+                  raise <code>TrialPruned</code> so Optuna treats it as invalid rather than informative. Small
+                  difference in code, large difference in search quality.
+                </li>
+                <li>
+                  <strong>Feature alignment is a silent killer.</strong> If the model lacks a
+                  <code>feature_names_in_</code> attribute, it receives features in whatever order the caller
+                  sends them. For tree-based models, wrong column order means wrong predictions -- silently.
+                  I added a schema file as a fallback alignment source.
+                </li>
+                <li>
+                  <strong>Validate config at startup, not at request time.</strong> Overlapping decision thresholds
+                  (approve > decline) would serve wrong decisions for every request. Now validated once at boot.
+                </li>
+                <li>
+                  <strong>Fairness is not a checkbox.</strong> Running <code>demographic_parity()</code> on a public
+                  dataset does not prove production fairness. But I still wanted to build the infrastructure --
+                  adverse impact ratio as a promotion gate, proxy sensitivity analysis, calibration by subgroup --
+                  because it forced me to think through the problem properly, even if the dataset is limited.
+                </li>
+              </ul>
+
+              <h2>Limitations</h2>
+              <ul>
+                <li>Uses the Home Credit public dataset, not live banking data — feature distributions may differ from production portfolios</li>
+                <li>Fairness diagnostics run on proxy attributes, not legally protected classes — real deployment needs HR/legal alignment on sensitive features</li>
+                <li>No online monitoring or drift detection yet — the system evaluates at training time but does not track model decay in production</li>
+                <li>Champion-challenger comparison is offline — there is no live traffic splitting or shadow scoring</li>
+              </ul>
+
+              <h2>Tech Stack</h2>
+              <ul>
+                <li><strong>Modelling:</strong> Python, scikit-learn, LightGBM, XGBoost, SHAP, Optuna</li>
+                <li><strong>Data:</strong> pandas, numpy, feature engineering pipelines</li>
+                <li><strong>Experiment tracking:</strong> MLflow</li>
+                <li><strong>Serving:</strong> FastAPI, Uvicorn, Pydantic v2</li>
+                <li><strong>Infrastructure:</strong> Docker, Makefile, CI/CD</li>
+              </ul>
+
+            </div>
+          </div>
+
+          <!-- Right: project info card -->
+          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="100">
+            <div class="project-info-card">
+              <h3>Project Information</h3>
+              <ul class="project-info-list">
+                <li><strong>Category</strong>Credit Risk -- Classical ML -- Responsible AI</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Stack</strong>Python -- scikit-learn -- LightGBM -- XGBoost -- SHAP -- FastAPI -- MLflow -- Docker</li>
+                <li>
+                  <strong>GitHub</strong>
+                  <a href="https://github.com/josephhzy/creditguard" target="_blank">
+                    <i class="fa-brands fa-github me-1"></i>josephhzy/creditguard
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Stat cards -->
+            <div class="row g-3 mt-4">
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">7</div>
+                  <div class="stat-label">Source Tables</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">87+</div>
+                  <div class="stat-label">Engineered Features</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">5</div>
+                  <div class="stat-label">Model Families</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">SHAP</div>
+                  <div class="stat-label">Explainability</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tech breakdown -->
+            <div class="project-info-card mt-4">
+              <h3>Tech Breakdown</h3>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Data Engineering</div>
+                <div class="tag-list">
+                  <span class="tag">pandas</span>
+                  <span class="tag">numpy</span>
+                  <span class="tag">7-table joins</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Modelling</div>
+                <div class="tag-list">
+                  <span class="tag">LightGBM</span>
+                  <span class="tag">XGBoost</span>
+                  <span class="tag">scikit-learn</span>
+                  <span class="tag">SMOTE</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Explainability</div>
+                <div class="tag-list">
+                  <span class="tag">SHAP</span>
+                  <span class="tag">Fairness diagnostics</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Governance</div>
+                <div class="tag-list">
+                  <span class="tag">MLflow</span>
+                  <span class="tag">Champion-Challenger</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Serving</div>
+                <div class="tag-list">
+                  <span class="tag">FastAPI</span>
+                  <span class="tag">Docker</span>
+                  <span class="tag">Pydantic v2</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="mt-5" data-aos="fade-up">
+          <a href="index.html#portfolio" class="card-arrow-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+          </a>
+          <a href="rag-details.html" class="card-arrow-link ms-4">
+            MASquery <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="llm-ops-details.html" class="card-arrow-link ms-4">
+            LLM Ops <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <p class="mb-0">&copy; 2026 Joseph Zhi Yu. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>

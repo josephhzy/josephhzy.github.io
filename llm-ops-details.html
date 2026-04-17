@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Ops — Production RAG Platform with Guardrails — Joseph Zhi Yu</title>
+  <meta name="description" content="RAG platform with policy guardrails, corpus governance, a model registry with promotion gates, Prometheus metrics, and Kubernetes manifests.">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="favicon_io/site.webmanifest">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <button id="sidebar-toggle" aria-label="Toggle navigation">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div id="sidebar-overlay"></div>
+
+  <aside id="sidebar">
+    <div class="profile">
+      <img src="assets/img/joseph-profile.png" class="sidebar-photo" alt="Joseph Zhi Yu">
+      <div class="sidebar-name"><a href="index.html">Joseph Zhi Yu</a></div>
+      <div class="social-links">
+        <a href="https://github.com/josephhzy" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html#hero"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="index.html#about"><i class="fa-solid fa-user"></i> About</a></li>
+        <li><a href="index.html#portfolio" class="active"><i class="fa-solid fa-briefcase"></i> Portfolio</a></li>
+        <li><a href="index.html#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div id="main">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+      <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h2>LLM Ops -- Production RAG Platform with Guardrails</h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="index.html#portfolio">Portfolio</a></li>
+            <li class="breadcrumb-item active">LLM Ops</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Detail Content -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="row g-5">
+
+          <!-- Left: main content -->
+          <div class="col-lg-8" data-aos="fade-up">
+            <img src="assets/img/portfolio/llm-ops-preview.png" class="project-main-img" alt="LLM Ops - Production RAG Platform with Guardrails">
+
+            <!-- CTA -->
+            <div class="demo-cta-bar mb-4">
+              <a href="https://github.com/josephhzy/LLMOps" target="_blank" class="btn-accent me-3">
+                <i class="fa-brands fa-github me-1"></i> GitHub
+              </a>
+            </div>
+
+            <!-- My Contribution -->
+            <div class="safeguard-card mb-4">
+              <div class="safeguard-num">What I Built</div>
+              <div class="tag-list mt-2">
+                <span class="tag">15 services (separated so each can be tested independently)</span>
+                <span class="tag">Policy guardrails (pre + post)</span>
+                <span class="tag">Corpus governance + access controls</span>
+                <span class="tag">Model registry + evaluation gates</span>
+                <span class="tag">Prometheus metrics</span>
+                <span class="tag">90 tests</span>
+                <span class="tag">K8s manifests</span>
+                <span class="tag">Docker + CI</span>
+              </div>
+            </div>
+
+            <div class="project-description">
+
+              <h2>The Problem</h2>
+              <p>
+                Deploying an LLM in a regulated environment comes with a lot of requirements beyond
+                retrieval and generation: policy guardrails to reject out-of-scope queries, corpus controls
+                to prevent documents from leaking across clearance boundaries, audit trails for every query
+                and retrieval decision, and a model promotion process with proper evaluation gates.
+                I built this to work through those problems — who controls the documents, who reviews
+                the outputs, how you roll back a bad model, and how you show an auditor what happened.
+              </p>
+
+              <div class="row g-3 my-3">
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">Policy-first</div>
+                    <p>Unsafe or out-of-scope queries are blocked before generation — the model never sees them</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">Auditable</div>
+                    <p>Every query, ingestion, promotion, and rollback emits a traceable event with version history</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">90+ tests</div>
+                    <p>Coverage across the full flow — from corpus ingestion through query to model promotion</p>
+                  </div>
+                </div>
+              </div>
+
+              <h2>The Approach</h2>
+              <p>
+                The platform separates concerns that most RAG demos lump together. Queries pass through
+                policy checks before and after generation. Documents go through a governed corpus layer
+                with access controls. Models are versioned and promoted only after passing evaluation gates.
+                Every query, ingestion, and promotion emits an audit event and a Prometheus metric.
+                The goal is a system where an operator can answer "what happened and why" at any point —
+                every query, retrieved chunk set, guardrail decision, model version, and promotion event
+                is logged as an auditable record.
+              </p>
+
+              <h2>How an Operator Uses This</h2>
+              <ol>
+                <li>Ingest approved documents into the governed corpus with access classification</li>
+                <li>User submits a query via REST API</li>
+                <li>Pre-generation policy checks run — out-of-scope or injection attempts are blocked</li>
+                <li>Retrieval is scoped to the user's authorised document set</li>
+                <li>Active model generates a grounded answer</li>
+                <li>Post-generation compliance checks validate the response</li>
+                <li>Audit event and Prometheus metrics emitted</li>
+                <li>When a new model is ready, it is evaluated against the champion — promoted only if it passes the gate</li>
+              </ol>
+
+              <h2>Architecture</h2>
+
+              <!-- Architecture diagram: Platform layers -->
+              <div class="arch-diagram my-4">
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-user"></i></div>
+                  <div class="arch-label">Client Request</div>
+                  <div class="arch-sub">Query via REST API</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage arch-stage--safeguard">
+                  <div class="arch-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                  <div class="arch-label">Pre-Check Guardrails</div>
+                  <div class="arch-sub">Policy enforcement -- content filtering</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                  <div class="arch-label">Retrieval</div>
+                  <div class="arch-sub">ChromaDB -- corpus-scoped search</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-robot"></i></div>
+                  <div class="arch-label">Generation</div>
+                  <div class="arch-sub">Model registry -- active model routing</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage arch-stage--safeguard">
+                  <div class="arch-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                  <div class="arch-label">Post-Check Guardrails</div>
+                  <div class="arch-sub">Output validation -- compliance checks</div>
+                </div>
+              </div>
+
+              <div class="arch-diagram my-3">
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-folder-open"></i></div>
+                  <div class="arch-label">Corpus Governance</div>
+                  <div class="arch-sub">Document lifecycle -- access controls</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-trophy"></i></div>
+                  <div class="arch-label">Model Registry</div>
+                  <div class="arch-sub">Champion-challenger -- versioning</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-chart-line"></i></div>
+                  <div class="arch-label">Monitoring</div>
+                  <div class="arch-sub">Prometheus metrics -- health checks</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-dharmachakra"></i></div>
+                  <div class="arch-label">Deployment</div>
+                  <div class="arch-sub">Docker -- Kubernetes-ready</div>
+                </div>
+              </div>
+
+              <h2>Policy Guardrails</h2>
+              <p>
+                The platform implements a two-stage guardrail system that enforces content policies both
+                before and after LLM generation:
+              </p>
+              <div class="row g-3 my-2">
+                <div class="col-md-6">
+                  <div class="safeguard-card">
+                    <div class="safeguard-num">Pre-Generation</div>
+                    <h5>Input policy checks</h5>
+                    <p>
+                      Incoming queries are evaluated against configurable policy rules before retrieval begins.
+                      This includes topic restriction enforcement, prompt injection detection, and scope
+                      validation -- ensuring the system only processes queries within its authorised domain.
+                      Rejected queries receive structured refusal responses with policy violation codes.
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="safeguard-card">
+                    <div class="safeguard-num">Post-Generation</div>
+                    <h5>Output compliance checks</h5>
+                    <p>
+                      Generated responses are validated against output policies before being returned to the
+                      client. This includes sensitive information detection, classification marking enforcement,
+                      and response format compliance. Violations trigger response modification or blocking with
+                      audit logging.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h2>Corpus Governance</h2>
+              <p>
+                In government and regulated environments, controlling what documents the RAG system can
+                access is as important as the quality of retrieval. The corpus governance layer provides:
+              </p>
+              <ul>
+                <li><strong>Document lifecycle management</strong> -- controlled ingestion, versioning, and retirement of corpus documents with audit trails</li>
+                <li><strong>Access-scoped retrieval</strong> -- queries are scoped to authorised document collections, preventing information leakage across classification boundaries</li>
+                <li><strong>Metadata-driven filtering</strong> -- retrieval can be constrained by document attributes (date, classification, source, department) at query time</li>
+                <li><strong>Corpus health monitoring</strong> -- metrics on document freshness, coverage gaps, and index consistency</li>
+              </ul>
+
+              <h2>Model Registry and Champion-Challenger</h2>
+              <p>
+                The platform maintains a model registry that tracks all deployed and candidate models.
+                Model transitions follow a champion-challenger process:
+              </p>
+              <ul>
+                <li><strong>Model versioning</strong> -- each model configuration (provider, parameters, prompt templates) is versioned and immutable once registered</li>
+                <li><strong>Challenger evaluation</strong> -- new models are evaluated against the current champion on a held-out evaluation set before promotion</li>
+                <li><strong>Traffic splitting</strong> -- configurable percentage of traffic can be routed to challenger models for shadow evaluation in production</li>
+                <li><strong>Rollback capability</strong> -- instant rollback to previous champion if the new model degrades in production</li>
+              </ul>
+
+              <h2>Monitoring and Observability</h2>
+              <p>
+                Production AI systems require continuous monitoring beyond application-level health checks.
+                The platform exposes Prometheus metrics covering:
+              </p>
+              <ul>
+                <li><strong>Request metrics</strong> -- latency percentiles, throughput, error rates, and status code distributions</li>
+                <li><strong>Retrieval quality signals</strong> -- average retrieval scores, zero-result rates, and corpus hit ratios</li>
+                <li><strong>Generation metrics</strong> -- token usage, generation latency, and guardrail trigger rates</li>
+                <li><strong>System health</strong> -- vector index status, model availability, and dependency health checks</li>
+              </ul>
+
+              <h2>What I Learned</h2>
+              <p>A few things I ran into while building this:</p>
+              <ul>
+                <li>
+                  <strong>Never trust user-provided roles for access control.</strong> An early version accepted the user's role directly from the request body -- any user could POST <code>{"role": "admin"}</code> to bypass document classification. The fix: resolve roles server-side from authenticated credentials, never from user input. This was the most important security lesson of the project.
+                </li>
+                <li>
+                  <strong>Define interfaces AND use them.</strong> I defined Protocol-based ports in <code>domain/ports.py</code> but initially forgot to actually inject them into services. Unused interfaces are worse than none -- they create a gap between documentation claims and reality. Every interface now has at least one test with a fake implementation.
+                </li>
+                <li>
+                  <strong>TF-IDF verification is a starting point, not a solution.</strong> The grounding check measures vocabulary overlap, not semantic entailment. An answer that contradicts the evidence but uses the same words would score high. I document this limitation honestly and describe the upgrade path (NLI models, claim extraction).
+                </li>
+                <li>
+                  <strong>Audit logging must be wired up, not just defined.</strong> Defining <code>AuditLogger.log_event()</code> is not the same as calling it. I initially had the logger defined but never invoked on the query path. Now every state-changing operation (queries, ingestion, model promotion, corpus changes) emits an audit event.
+                </li>
+                <li>
+                  <strong>Be transparent about what is simulated.</strong> The fine-tuning pipeline is a workflow contract, not actual training. I call this out explicitly in the limitations because pretending otherwise would be dishonest.
+                </li>
+              </ul>
+
+              <h2>Limitations</h2>
+              <ul>
+                <li>Authentication is API-key-based, not JWT/OAuth — production would need integration with an identity provider like Keycloak or Azure AD</li>
+                <li>Grounding verification uses TF-IDF similarity, not NLI — it checks vocabulary overlap, not semantic entailment. Upgrade path to NLI is documented</li>
+                <li>Fine-tuning pipeline is a workflow contract, not actual GPU training — it demonstrates orchestration (dataset validation, recipe parsing, promotion gates) with the training step clearly marked as an integration point</li>
+                <li>Kubernetes manifests are deployment-ready scaffolds, not a live production cluster — they define resource limits, health probes, and PVCs but have not been tested at scale</li>
+                <li>Single-node deployment only — scaling requires migrating to client-server vector DB, distributed job queue, and shared model registry</li>
+              </ul>
+
+              <h2>Tech Stack</h2>
+              <ul>
+                <li><strong>Application:</strong> Python, FastAPI, Pydantic v2</li>
+                <li><strong>Vector Store:</strong> ChromaDB, sentence-transformers</li>
+                <li><strong>Monitoring:</strong> Prometheus, structured logging</li>
+                <li><strong>Infrastructure:</strong> Docker, Kubernetes manifests, environment variable configuration</li>
+              </ul>
+
+            </div>
+          </div>
+
+          <!-- Right: project info card -->
+          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="100">
+            <div class="project-info-card">
+              <h3>Project Information</h3>
+              <ul class="project-info-list">
+                <li><strong>Category</strong>Production RAG -- AI Governance -- MLOps</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Stack</strong>Python -- FastAPI -- ChromaDB -- sentence-transformers -- Docker -- Kubernetes</li>
+                <li>
+                  <strong>GitHub</strong>
+                  <a href="https://github.com/josephhzy/LLMOps" target="_blank">
+                    <i class="fa-brands fa-github me-1"></i>josephhzy/LLMOps
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Stat cards -->
+            <div class="row g-3 mt-4">
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">2</div>
+                  <div class="stat-label">Guardrail Stages</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">K8s</div>
+                  <div class="stat-label">Deployment Ready</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">Prom</div>
+                  <div class="stat-label">Monitoring</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">C/C</div>
+                  <div class="stat-label">Model Governance</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tech breakdown -->
+            <div class="project-info-card mt-4">
+              <h3>Tech Breakdown</h3>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Application</div>
+                <div class="tag-list">
+                  <span class="tag">FastAPI</span>
+                  <span class="tag">Pydantic v2</span>
+                  <span class="tag">Python</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Retrieval</div>
+                <div class="tag-list">
+                  <span class="tag">ChromaDB</span>
+                  <span class="tag">sentence-transformers</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Guardrails</div>
+                <div class="tag-list">
+                  <span class="tag">Pre-check policies</span>
+                  <span class="tag">Post-check validation</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Governance</div>
+                <div class="tag-list">
+                  <span class="tag">Model registry</span>
+                  <span class="tag">Champion-Challenger</span>
+                  <span class="tag">Corpus management</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Infrastructure</div>
+                <div class="tag-list">
+                  <span class="tag">Docker</span>
+                  <span class="tag">Kubernetes</span>
+                  <span class="tag">Prometheus</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="mt-5" data-aos="fade-up">
+          <a href="index.html#portfolio" class="card-arrow-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+          </a>
+          <a href="creditguard-details.html" class="card-arrow-link ms-4">
+            CreditGuard <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="financialbench-details.html" class="card-arrow-link ms-4">
+            Financialbench <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <p class="mb-0">&copy; 2026 Joseph Zhi Yu. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>

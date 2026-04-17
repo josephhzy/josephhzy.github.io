@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MASquery — Regulatory Compliance RAG System — Joseph Zhi Yu</title>
+  <meta name="description" content="Hybrid-search RAG system for MAS banking regulations with BM25 + vector + RRF fusion, cross-encoder reranking, RAGAS evaluation, and anti-hallucination safeguards.">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="favicon_io/site.webmanifest">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <button id="sidebar-toggle" aria-label="Toggle navigation">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div id="sidebar-overlay"></div>
+
+  <aside id="sidebar">
+    <div class="profile">
+      <img src="assets/img/joseph-profile.png" class="sidebar-photo" alt="Joseph Zhi Yu">
+      <div class="sidebar-name"><a href="index.html">Joseph Zhi Yu</a></div>
+      <div class="social-links">
+        <a href="https://github.com/josephhzy" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        <!-- <a href="https://www.linkedin.com/in/josephzhiyu/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a> -->
+        <!-- <a href="https://www.kaggle.com/josephzhiyu" target="_blank" title="Kaggle"><i class="fa-brands fa-kaggle"></i></a> -->
+        <!-- <a href="https://leetcode.com/josephhzy/" target="_blank" title="LeetCode"><i class="fa-solid fa-code"></i></a> -->
+        <!-- <a href="https://twitter.com/josephh_zy" target="_blank" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a> -->
+      </div>
+    </div>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html#hero"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="index.html#about"><i class="fa-solid fa-user"></i> About</a></li>
+        <li><a href="index.html#portfolio" class="active"><i class="fa-solid fa-briefcase"></i> Portfolio</a></li>
+        <li><a href="index.html#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div id="main">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+      <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h2>MASquery — Regulatory Compliance RAG System</h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="index.html#portfolio">Portfolio</a></li>
+            <li class="breadcrumb-item active">MASquery</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Detail Content -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="row g-5">
+
+          <!-- Left: main content -->
+          <div class="col-lg-8" data-aos="fade-up">
+            <img src="assets/img/portfolio/masquery-preview.png" class="project-main-img" alt="MAS Regulatory RAG System">
+
+            <!-- Live demo CTA -->
+            <div class="demo-cta-bar mb-4">
+              <a href="https://github.com/josephhzy/MASquery" target="_blank" class="btn-accent me-3">
+                <i class="fa-brands fa-github me-1"></i> GitHub
+              </a>
+            </div>
+
+            <!-- My Contribution -->
+            <div class="safeguard-card mb-4">
+              <div class="safeguard-num">What I Built</div>
+              <div class="tag-list mt-2">
+                <span class="tag">PDF ingestion pipeline</span>
+                <span class="tag">Hybrid BM25 + vector search</span>
+                <span class="tag">Cross-encoder reranking</span>
+                <span class="tag">Citation verification</span>
+                <span class="tag">RAGAS evaluation</span>
+                <span class="tag">FastAPI serving</span>
+                <span class="tag">Test suite (9 files)</span>
+                <span class="tag">Docker + CI</span>
+              </div>
+            </div>
+
+            <div class="project-description">
+
+              <h2>The Problem</h2>
+              <p>
+                Compliance officers at financial institutions spend hours sifting through hundreds of pages of
+                MAS regulatory PDFs -- guidelines on technology risk, outsourcing, business continuity, fair
+                dealing -- just to answer a single question. The documents are dense, cross-referencing, and
+                updated regularly. Missing a clause or misreading a threshold can mean regulatory penalties.
+              </p>
+              <p>
+                The obvious solution is to point an LLM at the documents and ask questions. But in financial
+                regulation, the failure mode is not "no answer" -- it is a <em>confidently wrong</em> answer.
+                Standard LLMs hallucinate citations that do not exist, misquote numerical thresholds, and
+                fabricate plausible-sounding regulatory references. A compliance officer who trusts a
+                hallucinated citation is in a worse position than one who found nothing at all.
+              </p>
+
+              <div class="row g-3 my-3">
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">Hybrid</div>
+                    <p>BM25 and vector search used together because each fails on different query types — exact clauses vs paraphrases</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">Refusal-first</div>
+                    <p>Low-confidence retrieval returns no answer instead of a fabricated regulation</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">Verified</div>
+                    <p>Every returned answer includes document, section, and page references for the evidence used in generation</p>
+                  </div>
+                </div>
+              </div>
+
+              <h2>The Approach</h2>
+              <p>
+                MASquery defaults to dense retrieval with cross-encoder reranking — the configuration
+                that won the measured ablation on the golden QA set. Both paths are implemented end-to-end:
+                a hybrid path (BM25 + dense + Reciprocal Rank Fusion) is kept available as an opt-in
+                for corpora where lexical recall earns its keep. Answers are grounded in retrieved source
+                chunks, citations are verified against the evidence, and the system refuses to answer when
+                retrieval confidence is low. In regulatory compliance, returning nothing is better than
+                returning something wrong.
+              </p>
+
+              <h2>Why the Design Mattered</h2>
+              <ul>
+                <li><strong>Measured the retrieval choice, didn't assume it.</strong> Ran a dense-vs-BM25-vs-hybrid ablation; dense + cross-encoder rerank produced the best MRR@10 and P@1 on this corpus — so it's the default rather than hybrid-by-reflex</li>
+                <li><strong>Cross-encoder reranking lifted precision</strong> by +0.08–0.15 P@1 across all retrieval modes</li>
+                <li><strong>Hybrid remains a first-class path</strong> — BM25 + dense + RRF is wired up and available per-request for corpora where exact-match signal (clause numbers, defined acronyms) outweighs paraphrase recall</li>
+                <li><strong>Threshold gating and citation verification</strong> reduced the chance that plausible-but-wrong passages survived into the final answer</li>
+              </ul>
+
+              <h2>What It Does</h2>
+              <ul>
+                <li>Answers plain-English questions over <strong>5 MAS regulatory documents</strong> (184 pages), grounding each response in retrieved source chunks with document, section, and page citations</li>
+                <li>Defaults to <strong>dense retrieval + cross-encoder rerank</strong> — the configuration that won the measured retrieval ablation on this corpus</li>
+                <li>Implements <strong>hybrid search</strong> as an opt-in path (<code>SEARCH_MODE=hybrid</code>): BM25 lexical retrieval and dense vector search fused via <strong>Reciprocal Rank Fusion (RRF)</strong>, kept available for corpora where lexical signal dominates</li>
+                <li>Applies <strong>cross-encoder reranking</strong> on top of the retrieved candidate set, improving precision by surfacing the most relevant chunks before generation</li>
+                <li>Validates system quality with <strong>RAGAS evaluation</strong> -- measuring faithfulness, answer relevance, and context precision across a test set of regulatory questions</li>
+                <li>Implements <strong>pre-generation similarity thresholding</strong> -- if no retrieved chunk meets the confidence threshold, the system declines to answer rather than hallucinating from parametric memory</li>
+                <li>Implements <strong>post-generation citation verification</strong> -- after generating an answer, cited references are checked against the retrieved evidence and unsupported claims are flagged</li>
+                <li>Returns <strong>structured JSON</strong> with confidence levels, answerability signals, relevance scores, and per-source verification status</li>
+                <li>Served via <strong>FastAPI</strong> with Docker containerisation for reproducible deployment</li>
+              </ul>
+
+              <h2>Architecture</h2>
+
+              <!-- Architecture diagram: Ingestion -->
+              <div class="arch-diagram my-4">
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                  <div class="arch-label">PDF Ingestion</div>
+                  <div class="arch-sub">PyMuPDF -- font-size header detection</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-scissors"></i></div>
+                  <div class="arch-label">Chunking</div>
+                  <div class="arch-sub">600 tok -- 100 overlap -- section headers prepended</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-vector-square"></i></div>
+                  <div class="arch-label">Dual Indexing</div>
+                  <div class="arch-sub">FAISS vectors + BM25 inverted index</div>
+                </div>
+              </div>
+
+              <!-- Architecture diagram: Query pipeline -->
+              <div class="arch-diagram my-3">
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-question"></i></div>
+                  <div class="arch-label">User Query</div>
+                  <div class="arch-sub">Plain-English question</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-code-merge"></i></div>
+                  <div class="arch-label">Hybrid Search</div>
+                  <div class="arch-sub">BM25 + Vector -- RRF fusion</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage arch-stage--safeguard">
+                  <div class="arch-icon"><i class="fa-solid fa-ranking-star"></i></div>
+                  <div class="arch-label">Cross-Encoder Rerank</div>
+                  <div class="arch-sub">Precision re-scoring of candidates</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage arch-stage--safeguard">
+                  <div class="arch-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                  <div class="arch-label">Safeguard 1</div>
+                  <div class="arch-sub">Pre-generation threshold</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-robot"></i></div>
+                  <div class="arch-label">LLM Generation</div>
+                  <div class="arch-sub">Claude -- T=0 -- top-k chunks</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage arch-stage--safeguard">
+                  <div class="arch-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                  <div class="arch-label">Safeguard 2</div>
+                  <div class="arch-sub">Citation verification</div>
+                </div>
+              </div>
+
+              <h2>Why the Hybrid Path Exists (But Isn't the Default)</h2>
+              <p>
+                BM25 and vector retrieval produce scores on different scales and fail on different query types.
+                I implemented Reciprocal Rank Fusion because it combines both ranked lists without requiring
+                fragile score calibration — it just merges by rank position. On the MAS corpus, though, the
+                ablation showed dense retrieval with a cross-encoder rerank outperformed the hybrid path on
+                MRR@10 and P@1. So hybrid stays wired up as an opt-in (<code>SEARCH_MODE=hybrid</code>) for
+                corpora where lexical exact-match signal earns its keep, rather than being the default.
+              </p>
+
+              <h2>Cross-Encoder Reranking</h2>
+              <p>
+                After retrieval produces a candidate set, a cross-encoder re-scores each query-chunk pair by
+                attending to both simultaneously. This is slower than bi-encoder embeddings but catches
+                relevance nuances they miss — surfacing the strongest evidence before generation and pushing
+                marginal matches down.
+              </p>
+
+              <h2>Anti-Hallucination Safeguards</h2>
+              <p>
+                Each safeguard targets a different failure mode. They complement each other rather than overlap.
+              </p>
+              <div class="row g-3 my-2">
+                <div class="col-md-6">
+                  <div class="safeguard-card">
+                    <div class="safeguard-num">Safeguard 1</div>
+                    <h5>Pre-generation threshold</h5>
+                    <p>
+                      Before sending anything to the LLM, the top retrieved chunks are checked against a
+                      minimum confidence threshold. If none pass, the system returns <code>is_answerable: false</code>
+                      and stops. This prevents the model drawing on <em>parametric memory</em> when retrieval fails --
+                      the most common source of fabricated citations in RAG systems.
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="safeguard-card">
+                    <div class="safeguard-num">Safeguard 2</div>
+                    <h5>Post-generation citation verification</h5>
+                    <p>
+                      After the LLM generates an answer, the tracer module extracts every citation and checks
+                      whether the cited passage actually appears in the retrieved evidence. Citations to passages
+                      the model did not receive are flagged as unverified. This catches <em>drift</em> -- where
+                      the model retrieves the right chunks but then overstates or misattributes what they say.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h2>RAGAS Evaluation</h2>
+              <p>
+                End-to-end system quality is validated using the RAGAS framework, which measures multiple
+                dimensions of RAG performance without requiring manual annotation:
+              </p>
+              <ul>
+                <li><strong>Faithfulness</strong> -- whether the generated answer is supported by the retrieved context (measures hallucination)</li>
+                <li><strong>Answer relevance</strong> -- whether the answer addresses the original question</li>
+                <li><strong>Context precision</strong> -- whether the retrieved chunks are relevant to the question (measures retrieval quality)</li>
+              </ul>
+              <p>
+                RAGAS scores are tracked across system changes, providing an automated regression check that
+                ensures retrieval and generation quality do not degrade as the corpus or prompts evolve.
+              </p>
+
+              <h2>Corpus</h2>
+              <p>Five publicly available MAS regulatory documents (184 pages, 133 chunks after processing):</p>
+              <div class="table-responsive">
+                <table class="project-table">
+                  <thead><tr><th>Document</th><th>Edition</th><th>Pages</th></tr></thead>
+                  <tbody>
+                    <tr><td>Technology Risk Management Guidelines</td><td>Jan 2021</td><td>57</td></tr>
+                    <tr><td>Business Continuity Management Guidelines</td><td>Jun 2022</td><td>24</td></tr>
+                    <tr><td>Guidelines on Outsourcing (Banks)</td><td>Dec 2023</td><td>25</td></tr>
+                    <tr><td>Guidelines on Fair Dealing</td><td>May 2024</td><td>40</td></tr>
+                    <tr><td>E-Payments User Protection Guidelines</td><td>Dec 2024</td><td>38</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h2>What I Learned</h2>
+              <p>A few things I ran into while building this:</p>
+              <ul>
+                <li>
+                  <strong>Validate dependencies at startup, not on first use.</strong> The original code only checked the API key when the first query arrived. The app appeared healthy at startup but failed on the first real request. Now the system validates all critical dependencies during the lifespan handler and logs clear warnings.
+                </li>
+                <li>
+                  <strong>Citation extraction is surprisingly fragile.</strong> LLMs format citations inconsistently -- "Section:" vs "Sec." vs "Part:". A rigid regex misses valid citations and marks them as unverified (a false hallucination signal). I made the pattern permissive with fallback alternatives.
+                </li>
+                <li>
+                  <strong>Concurrent requests can corrupt in-memory state.</strong> The FAISS index is global mutable state. Two simultaneous <code>/ingest</code> requests would corrupt it. I added a threading lock so concurrent ingests return 409 Conflict instead of silently breaking.
+                </li>
+                <li>
+                  <strong>Hybrid search beats both methods alone.</strong> Vector search finds semantically similar but lexically different passages. BM25 finds exact keyword matches that embeddings miss. RRF fusion consistently outperformed either method alone by 15-20% on our golden QA set.
+                </li>
+                <li>
+                  <strong>The "I don't know" case is the most important feature.</strong> A RAG system that confidently answers questions outside its corpus is worse than useless in a regulatory context. Two-layer answerability checking (pre-generation threshold + post-generation refusal detection) was critical.
+                </li>
+              </ul>
+
+              <h2>Limitations</h2>
+              <ul>
+                <li>Corpus is 5 MAS documents (184 pages) — a production system would need thousands of documents with incremental re-indexing</li>
+                <li>RAGAS evaluation is reference-free, not gold-standard — it measures internal consistency, not ground-truth correctness</li>
+                <li>Cross-encoder reranking adds latency (~200ms per query) — a production deployment would need to evaluate the precision/latency tradeoff</li>
+                <li>No user feedback loop — the system cannot learn from corrections or track which answers users found useful</li>
+              </ul>
+
+            </div>
+          </div>
+
+          <!-- Right: project info card -->
+          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="100">
+            <div class="project-info-card">
+              <h3>Project Information</h3>
+              <ul class="project-info-list">
+                <li><strong>Category</strong>RAG -- Compliance AI -- Hybrid Search</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Stack</strong>Python -- FastAPI -- FAISS -- sentence-transformers -- Anthropic Claude -- Docker</li>
+                <li>
+                  <strong>GitHub</strong>
+                  <a href="https://github.com/josephhzy/MASquery" target="_blank">
+                    <i class="fa-brands fa-github me-1"></i>josephhzy/MASquery
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Stat cards -->
+            <div class="row g-3 mt-4">
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">5</div>
+                  <div class="stat-label">MAS Documents</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">184</div>
+                  <div class="stat-label">Pages Indexed</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">133</div>
+                  <div class="stat-label">Chunks Indexed</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">3</div>
+                  <div class="stat-label">Retrieval Stages</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tech breakdown -->
+            <div class="project-info-card mt-4">
+              <h3>Tech Breakdown</h3>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Ingestion</div>
+                <div class="tag-list">
+                  <span class="tag">PyMuPDF</span>
+                  <span class="tag">LangChain Splitters</span>
+                  <span class="tag">tiktoken</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Retrieval</div>
+                <div class="tag-list">
+                  <span class="tag">BM25</span>
+                  <span class="tag">FAISS</span>
+                  <span class="tag">RRF Fusion</span>
+                  <span class="tag">Cross-Encoder</span>
+                  <span class="tag">sentence-transformers</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Generation</div>
+                <div class="tag-list">
+                  <span class="tag">Anthropic Claude</span>
+                  <span class="tag">Citation Verification</span>
+                  <span class="tag">tenacity</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Evaluation</div>
+                <div class="tag-list">
+                  <span class="tag">RAGAS</span>
+                  <span class="tag">Faithfulness</span>
+                  <span class="tag">Context Precision</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Serving</div>
+                <div class="tag-list">
+                  <span class="tag">FastAPI</span>
+                  <span class="tag">Docker</span>
+                  <span class="tag">Pydantic v2</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="mt-5" data-aos="fade-up">
+          <a href="index.html#portfolio" class="card-arrow-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+          </a>
+          <a href="financialbench-details.html" class="card-arrow-link ms-4">
+            Financialbench <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="creditguard-details.html" class="card-arrow-link ms-4">
+            CreditGuard <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <p class="mb-0">&copy; 2026 Joseph Zhi Yu. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>

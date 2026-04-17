@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Joseph Zhi Yu — AI/ML Engineering Portfolio</title>
+  <meta name="description" content="Portfolio of Joseph Zhi Yu, an AI/ML engineer in Singapore focused on responsible AI, regulated-domain ML, and production AI systems. Projects span credit risk modelling, regulatory RAG, LLM evaluation, and production RAG platforms.">
+  <meta name="keywords" content="AI Engineer, ML Engineer, Data Science, Responsible AI, RAG, LLM, Credit Risk, Singapore">
+  <meta name="author" content="Joseph Zhi Yu">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Joseph Zhi Yu — AI/ML Engineering Portfolio">
+  <meta property="og:description" content="Production AI systems for regulated domains — credit risk modelling, regulatory RAG, LLM evaluation, and enterprise RAG platforms with guardrails.">
+  <meta property="og:image" content="assets/img/joseph-profile.png">
+  <meta property="og:type" content="website">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="favicon_io/site.webmanifest">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Mobile toggle -->
+  <button id="sidebar-toggle" aria-label="Toggle navigation">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div id="sidebar-overlay"></div>
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar">
+    <div class="profile">
+      <img src="assets/img/joseph-profile.png" class="sidebar-photo" alt="Joseph Zhi Yu">
+      <div class="sidebar-name"><a href="index.html">Joseph Zhi Yu</a></div>
+      <div class="social-links">
+        <a href="https://github.com/josephhzy" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        <!-- <a href="https://www.linkedin.com/in/josephzhiyu/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a> -->
+        <!-- <a href="https://www.kaggle.com/josephzhiyu" target="_blank" title="Kaggle"><i class="fa-brands fa-kaggle"></i></a> -->
+        <!-- <a href="https://leetcode.com/josephhzy/" target="_blank" title="LeetCode"><i class="fa-solid fa-code"></i></a> -->
+        <!-- <a href="https://twitter.com/josephh_zy" target="_blank" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a> -->
+      </div>
+    </div>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="#hero" class="active"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="#about"><i class="fa-solid fa-user"></i> About</a></li>
+        <li><a href="#portfolio"><i class="fa-solid fa-briefcase"></i> Portfolio</a></li>
+        <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div id="main">
+
+    <!-- ======= Hero ======= -->
+    <section id="hero">
+      <div class="hero-content" data-aos="fade-in">
+        <h1>Joseph Zhi Yu</h1>
+        <p class="hero-subtitle">
+          <span data-typed-items="AI/ML Engineer,Data Scientist,Responsible AI,Production AI Systems"></span>
+        </p>
+        <div class="hero-cta">
+          <a href="#portfolio" class="btn-accent">View Projects</a>
+          <a href="#contact" class="btn-outline-light-custom">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= About ======= -->
+    <section id="about" class="section-pad">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>About</h2>
+        </div>
+        <div class="row align-items-start">
+          <div class="col-lg-4 text-center text-lg-start mb-4 mb-lg-0" data-aos="fade-right">
+            <img src="assets/img/joseph-profile.png" class="about-photo" alt="Joseph Zhi Yu">
+          </div>
+          <div class="col-lg-8" data-aos="fade-left">
+            <p class="about-role">AI/ML Engineering &amp; Responsible AI</p>
+            <p class="about-lead">
+              I work on ML systems in regulated domains — credit risk, compliance, financial data. Most
+              recently, I was in people analytics at a Singapore bank, supporting retention-risk
+              modelling. Most of what I learned there was about what happens after the model is trained:
+              getting it explainable, auditable, and into production with proper governance.
+            </p>
+            <div class="row">
+              <div class="col-md-6">
+                <ul class="about-info">
+                  <li><i class="fa-solid fa-chevron-right"></i> <strong>Email</strong> <span>josephhzy22@gmail.com</span></li>
+                  <li><i class="fa-solid fa-chevron-right"></i> <strong>City</strong> <span>Singapore</span></li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <ul class="about-info">
+                  <li><i class="fa-solid fa-chevron-right"></i> <strong>Degree</strong> <span>BBM (Finance), SMU</span></li>
+                  <li><i class="fa-solid fa-chevron-right"></i> <strong>Programme</strong> <span>Specialist Diploma in Data Analytics &amp; Data Engineering</span></li>
+                </ul>
+              </div>
+            </div>
+            <p class="about-body">
+              The projects below cover different parts of the ML lifecycle — feature engineering,
+              model evaluation, RAG pipelines, and deployment. Each one has tests, CI, containerisation,
+              and logging because I wanted them to feel like real systems, not just notebooks.
+            </p>
+            <div class="now-badge">
+              <span class="now-dot"></span>
+              Currently: Looking for applied AI / ML engineering roles in Singapore
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Portfolio ======= -->
+    <section id="portfolio" class="section-pad section-alt">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Portfolio</h2>
+          <p>
+            Five projects covering people analytics, credit risk, regulatory search, LLM evaluation, and
+            production RAG. Each one taught me something different about getting ML into production.
+          </p>
+        </div>
+        <div class="row g-4">
+
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="project-card">
+              <img src="assets/img/portfolio/hds-preview.png" class="project-card-img" alt="HDS">
+              <div class="project-card-body">
+                <h4>HDS — Employee Attrition Prediction &amp; HR Decision Support</h4>
+                <p>Monthly attrition risk scoring for HR teams. Flags at-risk employees with
+                   plain-English reason codes, routes them through contact suppression and HRBP
+                   review, and tracks intervention outcomes in a closed-loop ledger. Fairness
+                   audits and drift monitoring built in.</p>
+                <div class="tag-list">
+                  <span class="tag">Python</span>
+                  <span class="tag">scikit-learn</span>
+                  <span class="tag">SHAP</span>
+                  <span class="tag">Streamlit</span>
+                  <span class="tag">NetworkX</span>
+                  <span class="tag">Typer</span>
+                </div>
+                <div class="d-flex align-items-center gap-3 flex-wrap mt-1">
+                  <a href="hds-details.html" class="card-arrow-link">View details <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="https://github.com/josephhzy/hds" target="_blank" class="card-demo-link"><i class="fa-brands fa-github me-1"></i>GitHub</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="project-card">
+              <img src="assets/img/portfolio/creditguard-preview.png" class="project-card-img" alt="CreditGuard">
+              <div class="project-card-body">
+                <h4>CreditGuard — Credit Default Early Warning &amp; Decisioning</h4>
+                <p>Credit default prediction on a 307K-row banking dataset with 7 relational tables.
+                   8% default prevalence, SHAP explanations for each decision, fairness checks across
+                   subgroups, champion-challenger promotion via MLflow, and an interactive Streamlit
+                   dashboard for threshold, calibration, and fairness exploration.</p>
+                <div class="tag-list">
+                  <span class="tag">Python</span>
+                  <span class="tag">scikit-learn</span>
+                  <span class="tag">LightGBM</span>
+                  <span class="tag">XGBoost</span>
+                  <span class="tag">SHAP</span>
+                  <span class="tag">FastAPI</span>
+                  <span class="tag">MLflow</span>
+                  <span class="tag">Streamlit</span>
+                  <span class="tag">Docker</span>
+                </div>
+                <div class="d-flex align-items-center gap-3 flex-wrap mt-1">
+                  <a href="creditguard-details.html" class="card-arrow-link">View details <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="https://github.com/josephhzy/creditguard" target="_blank" class="card-demo-link"><i class="fa-brands fa-github me-1"></i>GitHub</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="project-card">
+              <img src="assets/img/portfolio/masquery-preview.png" class="project-card-img" alt="MASquery">
+              <div class="project-card-body">
+                <h4>MASquery — Regulatory Compliance RAG System</h4>
+                <p>Answers questions about MAS banking regulations. Dense retrieval with a cross-encoder
+                   rerank is the measured default (hybrid BM25 + vector + RRF available as opt-in).
+                   Refuses when retrieval confidence is low and verifies every citation against the source
+                   documents before returning it.</p>
+                <div class="tag-list">
+                  <span class="tag">Python</span>
+                  <span class="tag">FastAPI</span>
+                  <span class="tag">FAISS</span>
+                  <span class="tag">sentence-transformers</span>
+                  <span class="tag">Anthropic Claude</span>
+                  <span class="tag">Docker</span>
+                </div>
+                <div class="d-flex align-items-center gap-3 flex-wrap mt-1">
+                  <a href="rag-details.html" class="card-arrow-link">View details <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="https://github.com/josephhzy/MASquery" target="_blank" class="card-demo-link"><i class="fa-brands fa-github me-1"></i>GitHub</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="project-card">
+              <img src="assets/img/portfolio/finbench-preview.png" class="project-card-img" alt="Financialbench">
+              <div class="project-card-body">
+                <h4>Financialbench — LLM Evaluation &amp; AI Safety Testing</h4>
+                <p>Ran 660 structured evaluations to measure where LLMs hallucinate on verified financial
+                   facts from SGX-listed companies. Found a 65% hallucination rate on numerical data and
+                   2.3x sensitivity to prompt wording. Results are explorable in a live dashboard.</p>
+                <div class="tag-list">
+                  <span class="tag">Python</span>
+                  <span class="tag">Anthropic Claude</span>
+                  <span class="tag">sentence-transformers</span>
+                  <span class="tag">Streamlit</span>
+                </div>
+                <div class="d-flex align-items-center gap-3 flex-wrap mt-1">
+                  <a href="financialbench-details.html" class="card-arrow-link">View details <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="https://llm-finbench.streamlit.app/" target="_blank" class="card-demo-link"><i class="fa-solid fa-chart-bar me-1"></i>Live Dashboard</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="project-card">
+              <img src="assets/img/portfolio/llm-ops-preview.png" class="project-card-img" alt="LLM Ops">
+              <div class="project-card-body">
+                <h4>LLM Ops — Production RAG Platform with Guardrails</h4>
+                <p>A RAG platform with pre- and post-generation policy checks, document access controls,
+                   champion-challenger model promotion, and audit logging. 90 tests, Prometheus metrics,
+                   and Kubernetes manifests.</p>
+                <div class="tag-list">
+                  <span class="tag">Python</span>
+                  <span class="tag">FastAPI</span>
+                  <span class="tag">ChromaDB</span>
+                  <span class="tag">sentence-transformers</span>
+                  <span class="tag">Docker</span>
+                  <span class="tag">Kubernetes</span>
+                </div>
+                <div class="d-flex align-items-center gap-3 flex-wrap mt-1">
+                  <a href="llm-ops-details.html" class="card-arrow-link">View details <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="https://github.com/josephhzy/LLMOps" target="_blank" class="card-demo-link"><i class="fa-brands fa-github me-1"></i>GitHub</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Contact ======= -->
+    <section id="contact" class="section-pad">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Contact</h2>
+          <p>Open to opportunities in applied AI, data science, and ML engineering in Singapore.</p>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
+              <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="contact-text">
+                <h5>Email</h5>
+                <p><a href="mailto:josephhzy22@gmail.com">josephhzy22@gmail.com</a></p>
+              </div>
+            </div>
+            <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
+              <div class="contact-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+              <div class="contact-text">
+                <h5>LinkedIn</h5>
+                <p><a href="https://www.linkedin.com/in/josephzhiyu/" target="_blank">linkedin.com/in/josephzhiyu</a></p>
+              </div>
+            </div>
+            <div class="contact-item" data-aos="fade-up" data-aos-delay="300">
+              <div class="contact-icon"><i class="fa-brands fa-github"></i></div>
+              <div class="contact-text">
+                <h5>GitHub</h5>
+                <p><a href="https://github.com/josephhzy" target="_blank">github.com/josephhzy</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="mb-0">&copy; 2026 Joseph Zhi Yu. All rights reserved.</p>
+    </footer>
+
+  </div><!-- End #main -->
+
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>

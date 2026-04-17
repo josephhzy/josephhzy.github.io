@@ -1,0 +1,15 @@
+# Private notes / local-only
+CLAUDE.md
+Readme.txt
+.claude/
+*.private.md
+.private-notes/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

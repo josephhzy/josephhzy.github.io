@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HDS — Employee Attrition Prediction &amp; HR Decision Support — Joseph Zhi Yu</title>
+  <meta name="description" content="End-to-end people analytics system that predicts employee attrition risk, explains why with SHAP reason codes, and routes flags into an operational HR workflow with contact suppression, intervention logging, and fairness audits.">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="favicon_io/site.webmanifest">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <button id="sidebar-toggle" aria-label="Toggle navigation">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div id="sidebar-overlay"></div>
+
+  <aside id="sidebar">
+    <div class="profile">
+      <img src="assets/img/joseph-profile.png" class="sidebar-photo" alt="Joseph Zhi Yu">
+      <div class="sidebar-name"><a href="index.html">Joseph Zhi Yu</a></div>
+      <div class="social-links">
+        <a href="https://github.com/josephhzy" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html#hero"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="index.html#about"><i class="fa-solid fa-user"></i> About</a></li>
+        <li><a href="index.html#portfolio" class="active"><i class="fa-solid fa-briefcase"></i> Portfolio</a></li>
+        <li><a href="index.html#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div id="main">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+      <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h2>HDS -- Employee Attrition Prediction &amp; HR Decision Support</h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="index.html#portfolio">Portfolio</a></li>
+            <li class="breadcrumb-item active">HDS</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Detail Content -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="row g-5">
+
+          <!-- Left: main content -->
+          <div class="col-lg-8" data-aos="fade-up">
+            <img src="assets/img/portfolio/hds-preview.png" class="project-main-img" alt="HDS - Employee Attrition Prediction & HR Decision Support">
+
+            <!-- CTA -->
+            <div class="demo-cta-bar mb-4">
+              <a href="https://github.com/josephhzy/hds" target="_blank" class="btn-accent me-3">
+                <i class="fa-brands fa-github me-1"></i> GitHub
+              </a>
+            </div>
+
+            <!-- My Contribution -->
+            <div class="safeguard-card mb-4">
+              <div class="safeguard-num">What I Built</div>
+              <div class="tag-list mt-2">
+                <span class="tag">Monthly scoring pipeline</span>
+                <span class="tag">SHAP reason codes</span>
+                <span class="tag">Fairness audits</span>
+                <span class="tag">Contact suppression</span>
+                <span class="tag">Intervention ledger</span>
+                <span class="tag">Capacity-based evaluation</span>
+                <span class="tag">Role-based dashboard</span>
+                <span class="tag">7-model comparison</span>
+              </div>
+            </div>
+
+            <div class="project-description">
+
+              <h2>The Problem</h2>
+              <p>
+                Voluntary attrition is expensive. Replacing a mid-tenure professional costs 6--12 months
+                of their salary in recruiting, onboarding, and lost productivity. For a 10,000-person employer,
+                a 1-point reduction in annual attrition frees up several million dollars. HR teams rarely
+                struggle to identify at-risk employees <em>after</em> they resign -- the gap is knowing
+                where to focus retention efforts <em>before</em> it happens.
+              </p>
+
+              <h2>Why This Was Hard</h2>
+              <ul>
+                <li><strong>It is a human decision, not an automated one.</strong> Every flag goes to a human reviewer. The model cannot fire, penalise, or reward anyone -- it can only suggest where to look</li>
+                <li><strong>Attrition is rare.</strong> Around 4% of employees resign in any given period -- the model needs to surface useful flags without drowning HR in false positives</li>
+                <li><strong>Explanations need to be readable by HR, not data scientists.</strong> SHAP values are useful; "feature_3 contributed 0.12" is not. Reason codes need plain English</li>
+                <li><strong>Fairness is not optional.</strong> A model that systematically over-flags one grade band or gender is a liability, not a tool</li>
+              </ul>
+
+              <div class="row g-3 my-3">
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">~4%</div>
+                    <p>Attrition rate -- rare event classification where precision at the top matters more than overall accuracy</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">Top-N%</div>
+                    <p>Percentile thresholds keep HRBP workload constant each month, regardless of score drift</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">9 steps</div>
+                    <p>Score, flag, explain, suppress, intervene, log, track outcome, monitor drift, revalidate</p>
+                  </div>
+                </div>
+              </div>
+
+              <h2>The Approach</h2>
+              <p>
+                Built as a clean-room re-implementation of an employee retention system I supported at a previous role.
+                The original used PyCaret across 120+ features; this version reproduces the same analytical
+                patterns (leakage-safe splits, SHAP reason codes, contact suppression, intervention logging)
+                in a portable, open-source shape with 34 features across 5 families.
+              </p>
+
+              <h2>How It Works</h2>
+
+              <!-- Architecture diagram row 1 -->
+              <div class="arch-diagram my-4">
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-database"></i></div>
+                  <div class="arch-label">Monthly HR Snapshot</div>
+                  <div class="arch-sub">Employee master, leave, training, salary, intranet</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-gears"></i></div>
+                  <div class="arch-label">Feature Engineering</div>
+                  <div class="arch-sub">34 features -- peer compare, momentum, rolling, network</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-brain"></i></div>
+                  <div class="arch-label">Score &amp; Rank</div>
+                  <div class="arch-sub">Logistic Regression -- top N% flagged monthly</div>
+                </div>
+              </div>
+
+              <!-- Architecture diagram row 2 -->
+              <div class="arch-diagram my-3">
+                <div class="arch-stage arch-stage--safeguard">
+                  <div class="arch-icon"><i class="fa-solid fa-comment-dots"></i></div>
+                  <div class="arch-label">Reason Codes</div>
+                  <div class="arch-sub">SHAP in plain English -- protected attrs screened</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage arch-stage--safeguard">
+                  <div class="arch-icon"><i class="fa-solid fa-bell-slash"></i></div>
+                  <div class="arch-label">Contact Suppression</div>
+                  <div class="arch-sub">No repeat contact within lookback window</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-user-check"></i></div>
+                  <div class="arch-label">HRBP Review</div>
+                  <div class="arch-sub">Human decides intervention -- model suggests, never acts</div>
+                </div>
+                <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="arch-stage">
+                  <div class="arch-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                  <div class="arch-label">Intervention Ledger</div>
+                  <div class="arch-sub">Action logged -- outcome tracked -- feeds revalidation</div>
+                </div>
+              </div>
+
+              <h2>Feature Engineering</h2>
+              <p>
+                Five feature families, each tied to a known attrition signal pattern. The original system
+                used 120+ features across the same families -- additions are mechanical.
+              </p>
+              <table class="project-table">
+                <thead>
+                  <tr><th>Family</th><th>Signal</th><th>Examples</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Peer Comparison</strong></td>
+                    <td>How does this employee compare to peers in the same grade?</td>
+                    <td>Salary vs peer mean, training vs peers, sick leave vs peers</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Momentum</strong></td>
+                    <td>Is behaviour getting better or worse?</td>
+                    <td>Leave 3M/6M ratio, training 3M/6M ratio (>1 = worsening)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Rolling Windows</strong></td>
+                    <td>Sustained behavioural shifts over time</td>
+                    <td>Intranet views at 3M, 6M, 12M windows</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Network</strong></td>
+                    <td>Social signals from peer-recognition graph</td>
+                    <td>Resigned neighbours, influence score, recognition activity</td>
+                  </tr>
+                  <tr>
+                    <td><strong>HR Ratios</strong></td>
+                    <td>Composite indicators</td>
+                    <td>Sick leave mix, training per tenure year, job-seeking flag</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h2>Modelling</h2>
+              <p>
+                Logistic Regression is the default production model -- chosen for interpretability and
+                operational stability, not because it had the highest AUC. The original system
+                ran a PyCaret sweep and landed on the same choice for the same reasons: HR and compliance
+                teams need to audit the model, and SHAP LinearExplainer is stable and fast.
+              </p>
+              <p>
+                The <code>hds compare</code> command benchmarks 7 estimator families (Logistic Regression,
+                Calibrated LogReg, Random Forest, Balanced RF, RUSBoost, Histogram Gradient Boosting,
+                LightGBM) on the same test set. Validation uses time-based splits with grouped K-fold
+                so no employee appears in both train and test.
+              </p>
+
+              <h2>Evaluation</h2>
+              <p>
+                AUC alone does not tell an HR team whether the model is worth deploying. HDS reports
+                four views designed for different audiences:
+              </p>
+              <table class="project-table">
+                <thead>
+                  <tr><th>View</th><th>What It Answers</th><th>Metrics</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Ranking quality</strong></td>
+                    <td>Can the model separate leavers from stayers?</td>
+                    <td>ROC AUC, AUC stability across seeds</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operational quality</strong></td>
+                    <td>At top 10% flagged, how accurate are we?</td>
+                    <td>Precision, recall, F1, lift</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Threshold sweep</strong></td>
+                    <td>What happens if we flag more or fewer?</td>
+                    <td>Precision-recall at 70th--95th percentile</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Business capacity curve</strong></td>
+                    <td>Given HRBP capacity of 5/10/15%, what's the financial outcome?</td>
+                    <td>True positives caught, review cost, attrition cost avoided, net value</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                The capacity view is what tends to matter to senior stakeholders -- it translates
+                classification metrics into FTE hours and dollars.
+              </p>
+
+              <h2>Explainability and Fairness</h2>
+              <div class="row g-3 my-2">
+                <div class="col-md-6">
+                  <div class="safeguard-card">
+                    <div class="safeguard-num">Reason Codes</div>
+                    <h5>Plain-English SHAP explanations</h5>
+                    <p>
+                      Every flagged employee gets reason codes explaining why they were flagged,
+                      written for HR readers ("Sick leave share increased 40% vs peers"). Protected
+                      attributes (gender, marital status, birth cohort) are available for fairness
+                      monitoring but actively excluded from the reason strings shown to managers.
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="safeguard-card">
+                    <div class="safeguard-num">Fairness Audit</div>
+                    <h5>Subgroup performance every cycle</h5>
+                    <p>
+                      AUC, precision, recall, F1, and flag rate computed by grade band, tenure band,
+                      and gender on every training run and scored month. Flag-rate deltas above 20%
+                      relative to the overall rate are surfaced for review. Fairness is diagnostic,
+                      not decorative.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h2>Operational Workflow</h2>
+              <p>
+                The system is designed around an operational monthly cadence, not a one-off model drop.
+                Three components make it operationally realistic:
+              </p>
+              <ul>
+                <li><strong>Contact suppression.</strong> No employee is contacted more than once per lookback window per supervisor. Prevents HRBP fatigue and employee distrust.</li>
+                <li><strong>Intervention logging.</strong> Every flag produces a record: who was flagged, who reviewed it, what intervention was chosen (stay interview, compensation review, career development, wellness support), and the eventual outcome (retained / resigned / pending).</li>
+                <li><strong>Drift monitoring.</strong> PSI on top features each month. Below 0.10 is stable, 0.10--0.25 is investigate, above 0.25 triggers retraining. Monthly performance tracking detects silent model degradation.</li>
+              </ul>
+
+              <h2>Stakeholder Dashboard</h2>
+              <p>
+                Three role-based tabs built in Streamlit:
+              </p>
+              <ul>
+                <li><strong>Leadership</strong> -- aggregate risk distribution, capacity curve (net value by review %), model performance summary</li>
+                <li><strong>HRBP</strong> -- flagged employee list ranked by score, reason codes, intervention suggestions</li>
+                <li><strong>Monitoring</strong> -- fairness subgroup table, PSI drift, monthly performance trends</li>
+              </ul>
+
+              <h2>What I Learned</h2>
+              <ul>
+                <li>
+                  <strong>Percentile thresholds instead of probability cutoffs.</strong> A fixed probability
+                  threshold (e.g. 0.5) produces wildly different flag counts each month as score distributions
+                  drift. "Flag the top 10%" keeps HRBP workload constant. Obvious in hindsight, but the
+                  original system ran with fixed cutoffs for months before switching.
+                </li>
+                <li>
+                  <strong>Contact suppression is not a nice-to-have.</strong> Without it, the same employees
+                  get flagged month after month and HRBPs stop trusting the system. The suppression ledger
+                  was one of the first things the original team built after go-live.
+                </li>
+                <li>
+                  <strong>Leakage is subtle in panel data.</strong> If the same employee appears in both
+                  train and test across different months, the model memorises individual patterns instead
+                  of learning population-level signals. Grouped K-fold with employee ID as the group key
+                  is non-negotiable.
+                </li>
+                <li>
+                  <strong>Interpretability is a feature, not a constraint.</strong> The original system tried
+                  gradient boosting first. It scored higher on AUC but HR could not explain the flags to
+                  managers. Logistic Regression with SHAP reason codes was adopted because people actually
+                  used the output.
+                </li>
+                <li>
+                  <strong>Fairness audits surface real problems.</strong> During development, one grade band
+                  had a 1.76x higher flag rate than the overall population. That was not a model bug -- it
+                  reflected a genuine retention problem in that band -- but without the audit, nobody would
+                  have known whether the disparity was signal or bias.
+                </li>
+              </ul>
+
+              <h2>Limitations</h2>
+              <ul>
+                <li>Uses synthetic data, not real HR records -- feature distributions and attrition patterns are simulated, not from a real employer</li>
+                <li>34 of 120+ features implemented -- all 5 pattern families are present, but production feature depth is not replicated</li>
+                <li>Fairness diagnostics are illustrative -- they surface potential disparities but do not constitute a regulatory or legal review</li>
+                <li>SHAP values indicate correlation, not causation -- reason codes are starting points for conversation, not diagnoses</li>
+                <li>No live feedback loop -- drift is detected via distributional statistics, not real-time label feedback</li>
+              </ul>
+
+              <h2>Tech Stack</h2>
+              <ul>
+                <li><strong>Modelling:</strong> Python, scikit-learn, SHAP, LightGBM (optional), imbalanced-learn (optional)</li>
+                <li><strong>Data:</strong> pandas, numpy, NetworkX (peer-recognition graph)</li>
+                <li><strong>Config:</strong> Pydantic, PyYAML</li>
+                <li><strong>CLI:</strong> Typer, Rich</li>
+                <li><strong>Dashboard:</strong> Streamlit</li>
+                <li><strong>Quality:</strong> ruff, mypy, pytest</li>
+              </ul>
+
+            </div>
+          </div>
+
+          <!-- Right: project info card -->
+          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="100">
+            <div class="project-info-card">
+              <h3>Project Information</h3>
+              <ul class="project-info-list">
+                <li><strong>Category</strong>People Analytics -- Decision Support -- Responsible AI</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Stack</strong>Python -- scikit-learn -- SHAP -- Streamlit -- Typer -- NetworkX</li>
+                <li>
+                  <strong>GitHub</strong>
+                  <a href="https://github.com/josephhzy/hds" target="_blank">
+                    <i class="fa-brands fa-github me-1"></i>josephhzy/hds
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Stat cards -->
+            <div class="row g-3 mt-4">
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">34</div>
+                  <div class="stat-label">Engineered Features</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">7</div>
+                  <div class="stat-label">Model Families</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">9</div>
+                  <div class="stat-label">Workflow Steps</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-card">
+                  <div class="stat-value">3</div>
+                  <div class="stat-label">Dashboard Views</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tech breakdown -->
+            <div class="project-info-card mt-4">
+              <h3>Tech Breakdown</h3>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Data &amp; Features</div>
+                <div class="tag-list">
+                  <span class="tag">pandas</span>
+                  <span class="tag">numpy</span>
+                  <span class="tag">NetworkX</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Modelling</div>
+                <div class="tag-list">
+                  <span class="tag">scikit-learn</span>
+                  <span class="tag">LightGBM</span>
+                  <span class="tag">imbalanced-learn</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Explainability</div>
+                <div class="tag-list">
+                  <span class="tag">SHAP</span>
+                  <span class="tag">Reason codes</span>
+                  <span class="tag">Fairness audits</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Operations</div>
+                <div class="tag-list">
+                  <span class="tag">Contact suppression</span>
+                  <span class="tag">Intervention ledger</span>
+                  <span class="tag">PSI drift</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Interface</div>
+                <div class="tag-list">
+                  <span class="tag">Streamlit</span>
+                  <span class="tag">Typer CLI</span>
+                  <span class="tag">Rich</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="mt-5" data-aos="fade-up">
+          <a href="index.html#portfolio" class="card-arrow-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+          </a>
+          <a href="creditguard-details.html" class="card-arrow-link ms-4">
+            CreditGuard <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="rag-details.html" class="card-arrow-link ms-4">
+            MASquery <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <p class="mb-0">&copy; 2026 Joseph Zhi Yu. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>

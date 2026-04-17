@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financialbench — LLM Evaluation &amp; AI Safety Testing — Joseph Zhi Yu</title>
+  <meta name="description" content="Responsible AI evaluation framework measuring LLM consistency and hallucination rates on financial data. 660 evaluation runs, model comparison, deployed on Streamlit Cloud.">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="favicon_io/site.webmanifest">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <button id="sidebar-toggle" aria-label="Toggle navigation">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div id="sidebar-overlay"></div>
+
+  <aside id="sidebar">
+    <div class="profile">
+      <img src="assets/img/joseph-profile.png" class="sidebar-photo" alt="Joseph Zhi Yu">
+      <div class="sidebar-name"><a href="index.html">Joseph Zhi Yu</a></div>
+      <div class="social-links">
+        <a href="https://github.com/josephhzy" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        <!-- <a href="https://www.linkedin.com/in/josephzhiyu/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a> -->
+        <!-- <a href="https://www.kaggle.com/josephzhiyu" target="_blank" title="Kaggle"><i class="fa-brands fa-kaggle"></i></a> -->
+        <!-- <a href="https://leetcode.com/josephhzy/" target="_blank" title="LeetCode"><i class="fa-solid fa-code"></i></a> -->
+        <!-- <a href="https://twitter.com/josephh_zy" target="_blank" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a> -->
+      </div>
+    </div>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html#hero"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="index.html#about"><i class="fa-solid fa-user"></i> About</a></li>
+        <li><a href="index.html#portfolio" class="active"><i class="fa-solid fa-briefcase"></i> Portfolio</a></li>
+        <li><a href="index.html#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div id="main">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+      <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h2>Financialbench — LLM Evaluation &amp; AI Safety Testing</h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="index.html#portfolio">Portfolio</a></li>
+            <li class="breadcrumb-item active">Financialbench</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Detail Content -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="row g-5">
+
+          <!-- Left: image + description -->
+          <div class="col-lg-8" data-aos="fade-up">
+            <img src="assets/img/portfolio/finbench-preview.png" class="project-main-img" alt="Financialbench - LLM Evaluation and AI Safety Testing">
+
+            <!-- Live demo CTA -->
+            <div class="demo-cta-bar mb-4">
+              <a href="https://llm-finbench.streamlit.app/" target="_blank" class="btn-accent">
+                <i class="fa-solid fa-chart-bar me-1"></i> Live Dashboard
+              </a>
+              <a href="https://github.com/josephhzy/llm-finbench" target="_blank" class="btn-outline-dark-custom">
+                <i class="fa-brands fa-github me-1"></i> GitHub
+              </a>
+            </div>
+
+            <!-- My Contribution -->
+            <div class="safeguard-card mb-4">
+              <div class="safeguard-num">What I Built</div>
+              <div class="tag-list mt-2">
+                <span class="tag">Controlled experiment design</span>
+                <span class="tag">Ground truth dataset (33 facts)</span>
+                <span class="tag">Independent extraction + scoring</span>
+                <span class="tag">Multi-model adapter</span>
+                <span class="tag">Streamlit dashboard</span>
+                <span class="tag">Test suite (194 tests)</span>
+                <span class="tag">Checkpoint recovery</span>
+              </div>
+            </div>
+
+            <div class="project-description">
+              <h2>The Problem</h2>
+              <p>
+                LLMs hallucinate financial data with confidence. Ask a model for DBS Group's CET1 ratio or
+                Singtel's revenue, and it will give you a precise-sounding number -- often wrong, sometimes
+                dangerously close to right. I wanted to measure this properly: <em>where</em> do they fail,
+                <em>how often</em>, and <em>is the failure pattern predictable</em>.
+              </p>
+              <p>
+                Anecdotal testing is not enough -- you need ground truth, controlled experiments across prompt
+                strategies and temperature settings, and statistical rigour to distinguish random variance from
+                systematic error. So I built a framework to generate that evidence.
+              </p>
+
+              <h2>The Approach</h2>
+              <p>
+                Standard LLM benchmarks test general knowledge and reasoning. They do not answer the question
+                that matters for financial applications: <em>can this model reliably reproduce a specific number
+                from a specific report, and will it give the same answer if asked differently?</em> This
+                framework tests that directly, on real financial data from SGX-listed companies.
+              </p>
+              <p>
+                The ground-truth set contains 33 manually verified numerical facts across five SGX-listed
+                companies, chosen to cover the kinds of figures that appear in real financial workflows:
+                capital ratios, revenue, profitability, and balance-sheet disclosures. Small but high-precision —
+                every fact is sourced from published annual reports with exact page references.
+              </p>
+
+              <h2>How It Works</h2>
+              <ul>
+                <li>Runs <strong>660 structured evaluation runs</strong> against a ground-truth dataset of verified financial facts from SGX-listed companies (DBS, OCBC, UOB, Singtel, CapitaLand)</li>
+                <li>Measures response quality across three dimensions: <strong>semantic consistency</strong>, <strong>factual consistency</strong>, and <strong>hallucination rate</strong></li>
+                <li>Supports <strong>multi-model comparison</strong> -- test the same fact set across Anthropic Claude, OpenAI GPT, and other providers to surface model-level differences in reliability</li>
+                <li>Uses an <strong>independent extraction stage</strong> to eliminate evaluator bias -- the model under test never scores its own outputs</li>
+                <li>Tests across <strong>multiple prompt templates and temperature levels</strong> with repeated runs per combination to measure variance</li>
+                <li>Scores each fact with a composite stability score and traffic-light flag (green / yellow / red)</li>
+                <li>Deployed on <strong>Streamlit Cloud</strong> with interactive dashboards for per-fact, per-model, and per-template breakdowns</li>
+              </ul>
+
+              <h2>What This Tells You Before Deployment</h2>
+              <ul>
+                <li><strong>Hallucination rates, measured</strong> — not anecdotal, but quantified across hundreds of controlled runs so you know the baseline failure rate</li>
+                <li><strong>Random variance vs systematic error</strong> — the model gives different wrong answers each time (variance) or the same wrong answer consistently (bias). Different failure modes need different mitigations</li>
+                <li><strong>Model comparison for selection decisions</strong> — objective data on which model is more reliable on domain-specific numerical facts, tested under identical conditions</li>
+                <li><strong>Where human verification is most needed</strong> — large absolute figures hallucinate more than percentages, so you know which outputs to double-check</li>
+              </ul>
+
+              <h2>Model Comparison</h2>
+              <p>
+                The framework supports head-to-head model comparison on the same fact set. This enables
+                objective, data-driven model selection rather than relying on general-purpose benchmarks
+                that may not reflect performance on domain-specific financial data. Each model is tested
+                under identical conditions -- same facts, same prompts, same temperature settings -- so
+                differences in reliability are attributable to the model, not the evaluation setup.
+              </p>
+
+              <h2>Key Findings</h2>
+
+              <!-- Stat cards -->
+              <div class="row g-3 my-3">
+                <div class="col-6 col-md-3">
+                  <div class="stat-card">
+                    <div class="stat-value">660</div>
+                    <div class="stat-label">Evaluation Runs</div>
+                  </div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <div class="stat-card">
+                    <div class="stat-value">0.593</div>
+                    <div class="stat-label">Mean Stability</div>
+                  </div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <div class="stat-card">
+                    <div class="stat-value">2.3x</div>
+                    <div class="stat-label">Prompt Impact</div>
+                  </div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <div class="stat-card">
+                    <div class="stat-value">65%</div>
+                    <div class="stat-label">Hallucination Rate</div>
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="finding-heading"><span class="finding-num">01</span> Prompt wording matters more than temperature</h3>
+              <p>
+                The best-performing prompt template scored <strong>0.978</strong> stability while the worst
+                scored <strong>0.434</strong>. That is more than double the reliability from the same model on
+                the same facts, purely from prompt design. That means reliability is partly a system design
+                problem, not just a model selection problem — prompt engineering is a primary control lever.
+              </p>
+
+              <h3 class="finding-heading"><span class="finding-num">02</span> LLMs handle percentages better than large numbers</h3>
+              <p>
+                Percentage-based metrics (Net Interest Margin, Return on Equity) were consistently the most
+                stable facts. Large absolute figures in the hundreds of billions were the least stable. The model
+                struggles most with precisely the data types that matter most in financial analysis -- a finding
+                that directly informs where human verification is most needed.
+              </p>
+
+              <h3 class="finding-heading"><span class="finding-num">03</span> Lower temperature helps, but does not solve it</h3>
+              <p>
+                T=0.0 scored <strong>0.723</strong> vs T=1.0 at <strong>0.530</strong>. Setting temperature to
+                zero makes the model more deterministic -- but it still hallucinates the same wrong answer
+                consistently. Determinism is not the same as correctness. This is a critical distinction for
+                systems that rely on temperature=0 as a reliability measure.
+              </p>
+
+              <h3 class="finding-heading"><span class="finding-num">04</span> Evaluation integrity requires unit normalisation</h3>
+              <p>
+                65% of responses were flagged as hallucinations -- but only after unit normalisation was applied
+                in the scoring layer. Without it, a model answering "S$3 billion" would be incorrectly flagged
+                because the ground truth is stored as <code>3000</code> (SGD millions). This finding demonstrates
+                that evaluation methodology matters -- a poorly designed evaluator produces misleading
+                results.
+              </p>
+
+              <h2>Key Features</h2>
+              <ul>
+                <li><strong>660 structured evaluation runs</strong> covering verified financial facts from 5 SGX-listed companies</li>
+                <li><strong>Multi-model comparison</strong> -- provider-agnostic adapter pattern for testing across Anthropic, OpenAI, and other providers</li>
+                <li><strong>Interactive Streamlit dashboard</strong> deployed on Streamlit Cloud for exploring results by model, company, template, and temperature</li>
+                <li><strong>Checkpointing every 50 calls</strong> -- runs are resumable after crashes without losing progress</li>
+                <li><strong>Cost controls</strong> -- estimated cost is shown and confirmed before expensive runs execute</li>
+                <li><strong>YAML-based configuration</strong> -- all evaluation parameters externalised for reproducible experimentation</li>
+                <li><strong>Structured CSV reporting</strong> -- per-fact, by-company, by-template, and by-temperature exports</li>
+              </ul>
+
+              <h2>What I Learned</h2>
+              <p>A few things I ran into while building this:</p>
+              <ul>
+                <li>
+                  <strong>Floating-point arithmetic is treacherous in scoring.</strong> Comparing extracted values like "22,297 million" against ground truth requires careful handling. <code>22297.0 / 1000000 * 1000000</code> can give <code>22296.999999</code> in Python. I used explicit rounding with defined precision and deterministic tie-breaking for modal values.
+                </li>
+                <li>
+                  <strong>Make optional dependencies truly optional.</strong> The semantic consistency metric requires <code>sentence-transformers</code> (a heavy GPU library). In CI or lightweight environments, the scorer should gracefully return a default value with a warning -- not crash the entire evaluation pipeline.
+                </li>
+                <li>
+                  <strong>Log what the model actually said, not just that it failed.</strong> When the extractor cannot parse a number from an LLM response, knowing the raw response text is critical for debugging. "Extraction failed" tells you nothing; "Extraction failed on: 'Revenue was approximately twenty-two billion'" tells you the regex needs to handle word-form numbers.
+                </li>
+                <li>
+                  <strong>5% tolerance is not arbitrary.</strong> Financial reports present numbers with rounding ("~S$22.3B"). The tolerance must accommodate legitimate rounding while catching real errors. Testing at 3%, 5%, and 10% showed 5% is the sweet spot for this dataset.
+                </li>
+              </ul>
+
+              <h2>Impact</h2>
+              <div class="row g-3 my-2">
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">33</div>
+                    <p>Verified financial facts across 5 Singapore-listed companies with sourced ground truth</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">195</div>
+                    <p>Automated tests ensuring scoring, extraction, and reporting work correctly across edge cases</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="safeguard-card text-center">
+                    <div class="safeguard-num">4</div>
+                    <p>Prompt strategies tested systematically: direct extraction, contextual extraction, comparative, and qualitative</p>
+                  </div>
+                </div>
+              </div>
+
+              <h2>Limitations</h2>
+              <ul>
+                <li>Ground truth covers 33 facts from 5 SGX-listed companies — a larger fact set would give more statistical power to per-company and per-metric breakdowns</li>
+                <li>Evaluation uses the model's own extraction to parse answers — extraction errors can be misclassified as hallucinations</li>
+                <li>Only tested on Anthropic Claude models so far — multi-provider comparison (GPT-4, Gemini) is supported but not yet run</li>
+                <li>No temporal evaluation — the same facts should be re-tested as models are updated to track reliability drift over time</li>
+              </ul>
+
+              <h2>Connection to Other Projects</h2>
+              <p>
+                Financialbench showed me where LLMs fail on financial data.
+                <a href="rag-details.html">MASquery</a> was my attempt to address that -- a RAG system
+                with hybrid search and citation verification, so answers are grounded in source documents
+                rather than parametric memory.
+              </p>
+
+            </div>
+          </div>
+
+          <!-- Right: project info card -->
+          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="100">
+            <div class="project-info-card">
+              <h3>Project Information</h3>
+              <ul class="project-info-list">
+                <li><strong>Category</strong>Responsible AI -- LLM Evaluation -- AI Safety</li>
+                <li><strong>Year</strong>2026</li>
+                <li><strong>Stack</strong>Python -- Anthropic Claude -- sentence-transformers -- Streamlit</li>
+                <li>
+                  <strong>GitHub</strong>
+                  <a href="https://github.com/josephhzy/llm-finbench" target="_blank">
+                    <i class="fa-brands fa-github me-1"></i>josephhzy/llm-finbench
+                  </a>
+                </li>
+                <li>
+                  <strong>Live Dashboard</strong>
+                  <a href="https://llm-finbench.streamlit.app/" target="_blank">
+                    <i class="fa-solid fa-chart-bar me-1"></i>Streamlit Cloud
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Tech breakdown -->
+            <div class="project-info-card mt-4">
+              <h3>Tech Breakdown</h3>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Evaluation</div>
+                <div class="tag-list">
+                  <span class="tag">Anthropic Claude</span>
+                  <span class="tag">sentence-transformers</span>
+                  <span class="tag">regex extraction</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Dashboard</div>
+                <div class="tag-list">
+                  <span class="tag">Streamlit</span>
+                  <span class="tag">Streamlit Cloud</span>
+                  <span class="tag">pandas</span>
+                </div>
+              </div>
+              <div class="tech-layer">
+                <div class="tech-layer-label">Configuration</div>
+                <div class="tag-list">
+                  <span class="tag">YAML</span>
+                  <span class="tag">Provider adapters</span>
+                  <span class="tag">Checkpointing</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-5" data-aos="fade-up">
+          <a href="index.html#portfolio" class="card-arrow-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+          </a>
+          <a href="rag-details.html" class="card-arrow-link ms-4">
+            MASquery <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="llm-ops-details.html" class="card-arrow-link ms-4">
+            LLM Ops <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <p class="mb-0">&copy; 2026 Joseph Zhi Yu. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>
